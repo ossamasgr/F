@@ -10,10 +10,6 @@
 
         [Parameter(Mandatory=$true)]
         [string] 
-        $destStorageAccountKey,
-
-        [Parameter(Mandatory=$true)]
-        [string] 
         $desteblob,
         
         [Parameter(Mandatory=$true)]
@@ -34,7 +30,7 @@
 
         [Parameter(Mandatory=$true)]
         [string] 
-        $sourceSasToken
+        $sourceSasToken,
         [Parameter(Mandatory=$true)]
         [string] 
         $ResourceGroupName
