@@ -1,4 +1,7 @@
  param(
+        [Parameter(Mandatory=$true)]
+        [string] 
+        $ResourceGroupName,
 
         [Parameter(Mandatory=$true)]
         [string] 
@@ -11,18 +14,6 @@
         [Parameter(Mandatory=$true)]
         [string] 
         $desteblob,
-        
-        [Parameter(Mandatory=$true)]
-        [string] 
-        $SourceStorageAccountName,
-
-        [Parameter(Mandatory=$true)]
-        [string] 
-        $Sourcecontainer,
-
-        [Parameter(Mandatory=$true)]
-        [string] 
-        $sourceVHDname,
 
         [Parameter(Mandatory=$true)]
         [string] 
@@ -30,10 +21,8 @@
 
         [Parameter(Mandatory=$true)]
         [string] 
-        $sourceSasToken,
-        [Parameter(Mandatory=$true)]
-        [string] 
-        $ResourceGroupName
+        $sourceSasToken
+
 )
 
         # Credentials
