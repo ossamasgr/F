@@ -1,10 +1,6 @@
  param(
         [Parameter(Mandatory=$true)]
         [string] 
-        $ResourceGroupName,
-
-        [Parameter(Mandatory=$true)]
-        [string] 
         $dest_storageAccountName,
     
         [Parameter(Mandatory=$true)]
@@ -31,8 +27,7 @@
         # Credentials
         $myCredential = Get-AutomationPSCredential -Name 'automationCredentials'
         $userName = $myCredential.UserName
-	$securePassword = $myCredential.Password
-	#$destStorageAccountKey = (Get-AzStorageAccountKey  -ResourceGroupName $ResourceGroupName -Name $Source_storageAccount).Value[0]        
+	$securePassword = $myCredential.Password        
 	$destContext = New-AzStorageContext -StorageAccountName $dest_storageAccountName -StorageAccountKey $StorageAccountKey
 	$sasVHDurl=$sourceVhdURL+'?'+$sourceSasToken
 	
