@@ -31,20 +31,20 @@
 	$securePassword = $myCredential.Password
 	$destStorageAccountKey = (Get-AzStorageAccountKey  -ResourceGroupName $ResourceGroupName -Name $Source_storageAccount).Value[0]        
 	$destContext = New-AzStorageContext -StorageAccountName $dest_storageAccountName -StorageAccountKey $destStorageAccountKey
-	$sasVHDurl=$sourceVhdURL+$sourceSasToken
-
-		
+	$sasVHDurl=$sourceVhdURL+'?'+$sourceSasToken
+	
+				
         echo 'start the copy'
-		Start-AzStorageBlobCopy -AbsoluteUri $sasVHDurl -DestContainer $destContainerName -DestBlob $desteblob -DestContext $destContext -Force
-		echo 'start chekcing '
-		$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $desteblob -Container $destContainerName -WaitForComplete
-	    While($vhdCopyStatus.Status -ne "Success") {
+	Start-AzStorageBlobCopy -AbsoluteUri $sasVHDurl -DestContainer $destContainerName -DestBlob $desteblob -DestContext $destContext -Force
+	echo 'start chekcing '
+	$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $desteblob -Container $destContainerName -WaitForComplete
+	While($vhdCopyStatus.Status -ne "Success") {
     		if($vhdCopyStatus.Status -ne "Pending") {
         		echo "Error copying the VHD"
         		exit
         		}
-		$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $desteblob -Container $destContainerName 
+	$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $desteblob -Container $destContainerName 
     		echo "VHD copying is in progress" $vhdCopyStatus.BytesCopied "bytes copied of" $vhdCopyStatus.TotalBytes
     		sleep 5
-		}
-		echo "The VHD has been successfully copied"
+			}
+	echo "The VHD has been successfully copied"
