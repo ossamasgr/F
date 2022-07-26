@@ -33,7 +33,7 @@
 	
 				
         echo 'start the copy'
-	Start-AzStorageBlobCopy --PremiumPageBlobTier P10 -AbsoluteUri $sasVHDurl -DestContainer $destContainerName -DestBlob $desteblob -DestContext $destContext -Force
+	Start-AzStorageBlobCopy  -AbsoluteUri $sasVHDurl -DestContainer $destContainerName -DestBlob $desteblob -DestContext $destContext -Force
 	echo 'start chekcing '
 	$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $desteblob -Container $destContainerName
 	While($vhdCopyStatus.Status -ne "Success") {
