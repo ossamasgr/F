@@ -1,26 +1,26 @@
  param(
         [Parameter(Mandatory=$true)]
         [string] 
-        $dest_storageAccountName,
+        $NEWSTORAGEACCOUNTNAME,
     
         [Parameter(Mandatory=$true)]
         [string] 
-        $destContainerName,
+        $NEWSTORAGEACCOUNTCONTAINERNAME,
 
         [Parameter(Mandatory=$true)]
         [string] 
-        $desteblob,
+        $DESTVHDNAME,
 
         [Parameter(Mandatory=$true)]
         [string] 
-        $sourceVhdURL,
+        $VHDURL,
 
         [Parameter(Mandatory=$true)]
         [string] 
-        $sourceSasToken,
+        $SASTOKEN,
         [Parameter(Mandatory=$true)]
         [string] 
-        $StorageAccountKey	
+        $STORAGEACCOUNTKEY	
 
 )
 
@@ -29,19 +29,19 @@
         $userName = $myCredential.UserName
 	$securePassword = $myCredential.Password        
 	$destContext = New-AzStorageContext -StorageAccountName $dest_storageAccountName -StorageAccountKey $StorageAccountKey
-	$sasVHDurl=$sourceVhdURL+'?'+$sourceSasToken
+	$sasVHDurl=$VHDURL+'?'+$SASTOKEN
 	
 				
         echo 'start the copy'
-	Start-AzStorageBlobCopy  -AbsoluteUri $sasVHDurl -DestContainer $destContainerName -DestBlob $desteblob -DestContext $destContext -Force
+	Start-AzStorageBlobCopy  -AbsoluteUri $sasVHDurl -DestContainer $NEWSTORAGEACCOUNTCONTAINERNAME -DestBlob $DESTVHDNAME -DestContext $destContext -Force
 	echo 'start chekcing '
-	$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $desteblob -Container $destContainerName
+	$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $DESTVHDNAME -Container $NEWSTORAGEACCOUNTCONTAINERNAME
 	While($vhdCopyStatus.Status -ne "Success") {
     		if($vhdCopyStatus.Status -ne "Pending") {
         		echo "Error copying the VHD"
         		exit
         		}
-	$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $desteblob -Container $destContainerName 
+	$vhdCopyStatus=Get-AzStorageBlobCopyState -Context $destContext -Blob $DESTVHDNAME -Container $NEWSTORAGEACCOUNTCONTAINERNAME
     		echo "VHD copying is in progress" $vhdCopyStatus.BytesCopied "bytes copied of" $vhdCopyStatus.TotalBytes
     		sleep 5
 			}
