@@ -28,7 +28,7 @@
         $myCredential = Get-AutomationPSCredential -Name 'automationCredential'
         $userName = $myCredential.UserName
 	$securePassword = $myCredential.Password        
-	$destContext = New-AzStorageContext -StorageAccountName $dest_storageAccountName -StorageAccountKey $StorageAccountKey
+	$destContext = New-AzStorageContext -StorageAccountName $NEWSTORAGEACCOUNTNAME -StorageAccountKey $StorageAccountKey
 	$sasVHDurl=$VHDURL+'?'+$SASTOKEN
 	
 				
