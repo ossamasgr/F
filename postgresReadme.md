@@ -31,7 +31,7 @@ use those informations :
 ```
 user                    : root
 password                : r0F26owkK3
-host                    : 194.163.173.136
+host                    : 185.205.246.22
 port                    : 31169
 authenticationDatabase  : admin
 ```
